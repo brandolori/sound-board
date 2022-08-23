@@ -1,11 +1,7 @@
-const electron = require('electron');
-// Module to control application life.
-const app = electron.app;
+const { app, BrowserWindow } = require('electron');
 // Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow;
 
-const path = require('path');
-const url = require('url');
+const { join } = require('path');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -17,7 +13,7 @@ function createWindow() {
 
     // and load the index.html of the app.
     mainWindow.loadURL(app.isPackaged
-        ? `file://${path.join(__dirname, '../build/index.html')}`
+        ? `file://${join(__dirname, '../build/index.html')}`
         : 'http://localhost:3000');
 
     // Open the DevTools.
