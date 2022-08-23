@@ -1,13 +1,40 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Tray, Menu, MenuItem } = require('electron');
 // Module to create native browser window.
 
 const { join } = require('path');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
+let tray;
 let mainWindow;
 
+/** @type {(item:MenuItem)=>void} */
+const onClickMenu = (item) => {
+    console.log(`L'elemento e' impostato su ${item.checked}`)
+}
+
 function createWindow() {
+
+    appIcon = new Tray(join(__dirname, "../build/favicon.ico"))
+    const contextMenu = Menu.buildFromTemplate([
+        { label: 'Super bello', type: "checkbox", click: onClickMenu },
+        { label: 'Extra carino', type: "checkbox" },
+        {
+            label: 'Item4',
+            type: "submenu",
+            submenu: Menu.buildFromTemplate([
+                { label: 'Item1', type: 'radio' },
+                { label: 'Item2', type: 'radio' },
+            ])
+        },
+    ])
+
+    // Make a change to the context menu
+    contextMenu.items[1].checked = false
+
+    // Call this again for Linux because we modified the context menu
+    appIcon.setContextMenu(contextMenu)
+
     // Create the browser window.
     mainWindow = new BrowserWindow({ width: 800, height: 600, autoHideMenuBar: true });
 
