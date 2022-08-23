@@ -39,15 +39,29 @@
 }
 
 main {
+  /* background-color: aliceblue; */
+  padding: 40px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 30px;
 }
 
-main > button {
+button {
   width: 80px;
   height: 35px;
   border-radius: 8px;
-  border: none;
-  box-shadow: 0px 10px 10px black;
+  border: 1px solid #282c34;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, .6);
+  position: relative;
+  transition: transform .2s, box-shadow .2s, color .1s;
+}
+
+button:hover:not(:active) {
+  transform: translateY(-2px);
+  box-shadow: 0px 12px 10px rgba(0, 0, 0, .4);
+}
+
+button:active {
+  background-color: lightgrey;
 }

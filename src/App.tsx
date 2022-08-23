@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
@@ -7,7 +7,17 @@ const playSound = () => {
   player.play();
 }
 
+
 const App = () => {
+  const [boxChecked, setBoxChecked] = useState(false)
+
+  useEffect(() => {
+    /**@ts-ignore*/
+    window.electronAPI.handleBoxToggled((event, value) => {
+      setBoxChecked(value);
+    })
+
+  }, [])
 
   const [notificationClicked, setNotificationClicked] = useState(false)
 
@@ -17,7 +27,7 @@ const App = () => {
     })
       .onclick = () => setNotificationClicked(true)
   }
-  
+
   return <div className="App">
     <div className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
@@ -29,7 +39,7 @@ const App = () => {
         <button onClick={showNotification}>{notificationClicked
           ? <>Cliccata!</>
           : <>Non cliccata :/</>}</button>
-        <button>3</button>
+        <button>Box: {boxChecked ? "true" : "false"}</button>
       </main>
     </div>
   </div >

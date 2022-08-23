@@ -5,12 +5,12 @@ const { join } = require('path');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let tray;
 let mainWindow;
+let appIcon;
 
-/** @type {(item:MenuItem)=>void} */
+/** @type {(item: MenuItem) => void} */
 const onClickMenu = (item) => {
-    console.log(`L'elemento e' impostato su ${item.checked}`)
+    mainWindow.webContents.send('box-toggled', item.checked)
 }
 
 function createWindow() {
@@ -36,7 +36,15 @@ function createWindow() {
     appIcon.setContextMenu(contextMenu)
 
     // Create the browser window.
-    mainWindow = new BrowserWindow({ width: 800, height: 600, autoHideMenuBar: true });
+    mainWindow = new BrowserWindow({
+        width: 800, height: 600,
+        webPreferences: {
+            preload: join(__dirname, 'preload.js'),
+            devTools: !app.isPackaged,
+        }
+    });
+
+    mainWindow.removeMenu()
 
     // and load the index.html of the app.
     mainWindow.loadURL(app.isPackaged

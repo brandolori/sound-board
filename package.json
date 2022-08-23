@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "./",
   "dependencies": {},
-  "main": "vitals/electron.js",
+  "main": "vitals/main.js",
   "scripts": {
     "electron": "electron .",
     "start": "react-scripts start",
